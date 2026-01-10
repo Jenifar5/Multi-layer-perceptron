@@ -1,0 +1,16 @@
+import numpy as np def sigmoid(x): 
+return 1 / (1 + np.exp(-x)) def sigmoid_derivative(y): return y * (1 - y) X = np.array([[1, 1, 0, 1]]) y = np.array([[1]]) lr = 0.8 tolerance = 0.001 
+W1 = np.array([ 
+[ 0.3,  0.1], 
+[-0.2,  0.4], 
+[ 0.2, -0.3], 
+[ 0.1,  0.4] 
+]) 
+b1 = np.array([[0.2, 0.1]]) 
+W2 = np.array([ 
+[-0.3], 
+[ 0.2] 
+]) 
+b2 = np.array([[-0.3]]) epoch = 0 first_epoch_printed = False while True: epoch += 1 z1 = np.dot(X, W1) + b1 h = sigmoid(z1) z2 = np.dot(h, W2) + b2 o = sigmoid(z2) error = y - o 
+delta_out = error * sigmoid_derivative(o) delta_hidden = delta_out.dot(W2.T) * sigmoid_derivative(h) W2 += lr * h.T.dot(delta_out) b2 += lr * delta_out W1 += lr * X.T.dot(delta_hidden) b1 += lr * delta_hidden if not first_epoch_printed: print("\n--- First Epoch ---") print("Output (O):", o) print("Error (D - O):", error) print("Updated W1:\n", W1) print("Updated b1:\n", b1) print("Updated W2:\n", W2) print("Updated b2:\n", b2) first_epoch_printed = True if abs(error[0][0]) < tolerance: 
+print("\n--- Last Epoch (Converged) ---") print("Output (O):", o) print("Error (D - O):", error) print("Updated W1:\n", W1) print("Updated b1:\n", b1) print("Updated W2:\n", W2) print("Updated b2:\n", b2) break 
