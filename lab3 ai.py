@@ -14,7 +14,7 @@ def grad_cross_entropy(predictions, labels):
     m = labels.shape[0]
     grad = predictions.copy()
     grad[range(m), labels] -= 1
-    grad /= m
+    grad /=m
     return grad
 class MLP:
     def __init__(self, input_size=2, hidden1=8, hidden2=6, output_size=3, lr=0.5):
